@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="classes">
+    <listeners>
+        <listener class-name="listener.TestngListener"></listener>
+        <listener class-name="listener.ExtentReporterNGListener"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="changeLock" thread-count="1">
+        <classes>
+            <class name="testcases.ScreenlockTest">
+                <methods>
+                    <include name="testChangePattern"/>
+                    <include name="testChangePin"/>
+                    <!-- <include name="testDefaultWallpaper"/> -->
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
