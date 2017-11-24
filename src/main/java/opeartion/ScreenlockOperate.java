@@ -86,7 +86,7 @@ public class ScreenlockOperate extends OperateBase {
             goSleep(1000);
             driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER);//电源事件,亮屏
             goSleep(1000);
-            swipeToUp(2,7,2,8,500);
+            swipeToUp(2,7,2,8);
             if(lockType == Constant.LOCK_PATTERN){
                 drawLockPattern(0,1,2,5,8);//绘制图案
             }else if(lockType == Constant.LOCK_PIN){
