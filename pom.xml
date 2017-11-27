@@ -24,7 +24,7 @@
                 <version>2.20</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile><!--指向根目录下的testng.xml文件-->
+                        <suiteXmlFile>${xmlFileName}</suiteXmlFile><!--指向根目录下的testng.xml文件-->
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
