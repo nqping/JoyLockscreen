@@ -6,11 +6,11 @@ import com.aventstack.extentreports.model.TestAttribute;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.aventstack.extentreports.utils.DateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.*;
 import org.testng.IReporter;
 import org.testng.xml.XmlSuite;
-import utils.Constant;
 import utils.ReportUtil;
 
 import java.io.File;
@@ -21,9 +21,11 @@ import java.util.*;
  * Created by qingping.niu on 2017/11/10.
  */
 public class ExtentReporterNGListener implements IReporter {
+    Logger logger = LoggerFactory.getLogger(ExtentReporterNGListener.class);
     private static final String OUTPUT_FOLDER = "test-output/";
     private static final String FILE_NAME = "Extent.html";
     private ExtentReports extent;
+
 
 
     @Override
@@ -117,6 +119,7 @@ public class ExtentReporterNGListener implements IReporter {
         if(!reportDir.exists()&& !reportDir .isDirectory()){
             reportDir.mkdir();
         }
+        logger.info(OUTPUT_FOLDER + FILE_NAME);
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(OUTPUT_FOLDER + FILE_NAME);
         htmlReporter.config().setDocumentTitle("自动化测试报告");
         htmlReporter.config().setReportName("Joy Lockscreen自动化测试报告");
@@ -125,7 +128,7 @@ public class ExtentReporterNGListener implements IReporter {
         htmlReporter.config().setTheme(Theme.STANDARD); //主题
         htmlReporter.config().setCSS(".node.level-1  ul{ display:none;} .node.level-1.active ul{display:block;}");
         htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS);
-        htmlReporter.config().setEncoding("UTF-8");
+        //htmlReporter.config().setEncoding("utf-8");
         htmlReporter.setAppendExisting(false);//是否追加测试结果;
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
