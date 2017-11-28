@@ -128,7 +128,7 @@ public class ExtentReporterNGListener implements IReporter {
         htmlReporter.config().setTheme(Theme.STANDARD); //主题
         htmlReporter.config().setCSS(".node.level-1  ul{ display:none;} .node.level-1.active ul{display:block;}");
         htmlReporter.config().setResourceCDN(ResourceCDN.EXTENTREPORTS);
-        //htmlReporter.config().setEncoding("utf-8");
+        htmlReporter.config().setEncoding("utf-8");
         htmlReporter.setAppendExisting(false);//是否追加测试结果;
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
