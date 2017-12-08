@@ -9,5 +9,5 @@ public interface Constant {
     public static final int LOCK_PIN = 2;
     public static final int LOCK_SWIPE =1;
 
-    public static final String IMG_PATH = "test-output/image/";
+    public static final String IMG_PATH = "test-output/image";
 }
