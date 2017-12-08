@@ -1,22 +1,18 @@
 package testcases;
 
 import bases.BaseTestCase;
-import io.appium.java_client.android.AndroidDriver;
+import com.beust.jcommander.Parameter;
 import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.events.EventFiringWebDriverFactory;
-import io.appium.java_client.remote.AutomationName;
-import io.appium.java_client.remote.MobileCapabilityType;
-import listener.AppiumEventListener;
 import opeartion.FeedbackOperate;
+import opeartion.NotificationsOperate;
 import opeartion.ScreenlockOperate;
 import opeartion.WallpaperOperate;
-import org.jsoup.Connection;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
@@ -30,6 +26,7 @@ public class ScreenlockTest extends BaseTestCase{
     public ScreenlockOperate screenlockOperate = null;
     public WallpaperOperate wallpaperOperate = null;
     public FeedbackOperate feedbackOperate = null;
+    public NotificationsOperate notificationsOperate = null;
 
    @BeforeClass
     public void setUp() throws MalformedURLException {
@@ -37,9 +34,10 @@ public class ScreenlockTest extends BaseTestCase{
        wallpaperOperate = new WallpaperOperate(driver);
        screenlockOperate = new ScreenlockOperate(driver);
        feedbackOperate = new FeedbackOperate(driver);
+       notificationsOperate = new NotificationsOperate(driver);
    }
 
-   @Test
+   @Test(enabled = false)
     public void testModifyPassword() throws Exception {
        screenlockOperate.testSwipe();
       // Assert.assertEquals(flag,true,"success");
@@ -66,7 +64,7 @@ public class ScreenlockTest extends BaseTestCase{
     /**
      * 默认壁纸
      */
-   @Test
+   @Test(enabled  = false)
    public void testDefaultWallpaper(){
        boolean flag = wallpaperOperate.setDefaultWallpaper();
        assertTrue(flag,"setting default wallpaper fail");
@@ -83,4 +81,62 @@ public class ScreenlockTest extends BaseTestCase{
        AndroidElement element = feedbackOperate.feedbackInfo();
        assertNotNull(element,"submit feedback info fail");
    }
+
+   @Test
+   public void testAbout(){
+        boolean flag = feedbackOperate.swipeAbout();
+       assertTrue(flag,"checked about fail");
+   }
+
+    @Test
+    public void testAppNotifiactions(){
+        boolean flag = notificationsOperate.closeAppNotifications();
+        assertTrue(flag,"close and open app notifications fail");
+    }
+   @Test(parameters = {"endstr"})
+   public void testCheckDefaultStatus(String endstr){
+       Reporter.log("Get the parameters: "+endstr);
+       boolean flag = notificationsOperate.getDefaultStatus(endstr); //默认是全选
+       assertTrue(flag,"selected all fail");
+   }
+
+    @Test(dependsOnMethods = {"testCheckDefaultStatus"})
+    public void testCancelSelectApp(){
+        boolean flag = notificationsOperate.cancelSelectStatus(); //取消单个应用
+        assertTrue(flag,"cancel one app select status fail ");
+    }
+
+    @Test(parameters = {"endstr"},dependsOnMethods = {"testCancelSelectApp"},alwaysRun = true)
+    public void testSelectAll(String endstr){
+        Reporter.log("Get the parameters: "+endstr);
+        boolean flag = notificationsOperate.selectAll(endstr); //全选应用
+        assertTrue(flag,"selected all fail");
+    }
+
+    @Test(parameters = {"endstr"},dependsOnMethods = {"testSelectAll"},alwaysRun = true)
+    public void testReverseSelectApp(String endstr){
+        Reporter.log("Get the parameters: "+endstr);
+        boolean flag = notificationsOperate.reverseSelectApp(endstr); //取消全选应用
+        assertTrue(flag,"reverse selected all fail");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //@Test(dependsOnMethods ={"testChooseAppSelectAll"})
+
+
 }
