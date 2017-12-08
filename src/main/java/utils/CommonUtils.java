@@ -28,6 +28,23 @@ public class CommonUtils {
         }
 
     }
+    public static void getScreen(AndroidDriver driver){
+        try {
+            File directory = new File(Constant.IMG_PATH);
+            String screenPath = directory.getCanonicalPath()+"/";
+            File file = new File(screenPath);
+            if (!file.exists()){
+                file.mkdirs();
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+            String picName = screenPath + sdf.format(new Date()).toString()+".png";
+            File screen = driver.getScreenshotAs(OutputType.FILE);
+           // File screenFile = new File(picName);
+            FileUtils.copyFile(screen,new File(picName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      *  截图并保存到指定路径
@@ -36,13 +53,16 @@ public class CommonUtils {
      * @return
      */
     public static String getScreen(AndroidDriver driver ,String fileName){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-        //String picName = fileName + sdf.format(new Date()).toString()+".png";
         String picName = fileName+".png";
-        File screen = driver.getScreenshotAs(OutputType.FILE);
-        //File screenFile = new File(picName);
         try {
-            FileUtils.copyFile(screen,new File(Constant.IMG_PATH+picName));
+            File directory = new File(Constant.IMG_PATH);
+            String screenPath = directory.getCanonicalPath()+"/";
+            File file = new File(screenPath);
+            if (!file.exists()){
+                file.mkdirs();
+            }
+            File screen = driver.getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screen,new File(screenPath+picName));
         } catch (IOException e) {
             e.printStackTrace();
         }
