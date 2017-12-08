@@ -108,14 +108,19 @@ public class AppiumEventListener implements AppiumWebDriverEventListener{
     @Override
     public void afterClickOn(WebElement webElement, WebDriver webDriver) {
         while (true){
-            if(OperateBase.isElementExist("text(\"Allow\")")){
-                logger.info("Allow click");
+            if(OperateBase.isElementExistAndEnabled("text(\"Allow\")")){
                 driver.findElementByAndroidUIAutomator("text(\"Allow\")").click();
-
-            }else if(OperateBase.isElementExist("text(\"Always\")")){
                 logger.info("Allow click");
-                driver.findElementByAndroidUIAutomator(".text(\"Always\")").click();
 
+            }else if(OperateBase.isElementExistAndEnabled("text(\"Always\")") ){
+                driver.findElementByAndroidUIAutomator(".text(\"Always\")").click();
+                logger.info("Allow click");
+
+            }else if(OperateBase.isElementExist("text(\"Photos\")") &&
+                    OperateBase.isElementExist("text(\"Always\")")){
+                driver.findElementByAndroidUIAutomator("text(\"Photos\")").click();
+                driver.findElementByAndroidUIAutomator(".text(\"Always\")").click();
+                logger.info("Photos==>Allow click");
             }else{
                 break;
             }

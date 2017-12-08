@@ -25,16 +25,14 @@ public class TestngListener extends TestListenerAdapter{
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
         logger.info("【" + tr.getName() + " Failure】");
-        takeScreenShot(tr);
+        OperateBase.screenSrc(tr.getName());
         //    test.log(LogStatus.INFO,"TakesScreenshot ",test.addScreenCapture("../img/"+tr.getName()+".png"));
         //    test.log(LogStatus.FAIL, tr.getThrowable());
         //    extent.endTest(test);
 
     }
 
-    public void takeScreenShot(ITestResult tr){
-        OperateBase.screenSrc(tr.getName());
-    }
+
 
     @Override
     public void onTestSkipped(ITestResult tr) {
