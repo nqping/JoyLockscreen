@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.CommonUtils;
 
+import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -249,21 +250,7 @@ public class OperateBase{
     public void swipeToUp() {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        doSwipe(width / 2, height * 3 / 4, width / 2, height / 4, 1000);
-    }
-
-    /**
-     * 从指定距离向上滑动
-      * @param startX
-     * @param startY
-     * @param endX
-     * @param endY
-     */
-    public void swipeToUp(int startX,int startY,int endX,int endY) {
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-        logger.info(width / startX+"=="+height * startY / endY+"=="+width / endX+"=="+height / endY);
-        doSwipe(width / startX, height * startY / endY, width / endX, height / endY, 500);
+        doSwipe(width / 2, height * 3 / 4, width / 2, height / 4, 500);
     }
 
     /**
@@ -272,9 +259,6 @@ public class OperateBase{
     public void swipeToUp(int startX,int startY,int endX,int endY,int duration) {
         doSwipe(startX, startY, endX, endY, duration);
     }
-
-
-
 
     /**
      * 从左向右滑动
@@ -301,13 +285,43 @@ public class OperateBase{
         touchAction.perform();
     }
 
+//    public boolean swipeToUp(String str){
+//        boolean isSwipe = true;
+//        while (isSwipe){
+//            swipeToUp();
+//            goSleep(1000);
+//            String pageSource = driver.getPageSource();
+//            if(pageSource.contains(str)){
+//                isSwipe = false;
+//            }
+//        }
+//        return isSwipe;
+//    }
+
+    public boolean swipeToDown(String str){
+        boolean isSwipe = true;
+        while (isSwipe){
+            swipeToDown();
+            goSleep(1000);
+            String pageSource = driver.getPageSource();
+            if(pageSource.contains(str)){
+                isSwipe = false;
+            }
+        }
+        return isSwipe;
+    }
+
     /**
      *  休眠
      * @param seconds
      * @throws InterruptedException
      */
-    public void goSleep(int seconds) throws InterruptedException {
-        Thread.sleep(seconds);
+    public void goSleep(int seconds){
+        try {
+            Thread.sleep(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * 长按
@@ -330,6 +344,22 @@ public class OperateBase{
         return element;
     }
 
+    /**
+     * 判断控件是否存在并且是可用状态
+     * @param uiautomator
+     * @return
+     */
+    public static boolean isElementExistAndEnabled(String uiautomator){
+        try {
+            WebElement el = driver.findElementByAndroidUIAutomator(uiautomator);
+            if(el != null && el.isEnabled())
+                return true;
+            return false;
+        } catch (org.openqa.selenium.NoSuchElementException ex) {
+            return false;
+        }
+    }
+
     public static boolean isElementExist(String uiautomator){
         try {
             driver.findElementByAndroidUIAutomator(uiautomator);
@@ -338,6 +368,20 @@ public class OperateBase{
             return false;
         }
     }
+//    public static boolean isElementExist(final String uiautomator){
+//        try {
+//            new WebDriverWait(driver,10).until(new ExpectedCondition<WebElement>() {
+//                @Override
+//                public WebElement apply(WebDriver webDriver) {
+//                    return driver.findElementByAndroidUIAutomator(uiautomator);
+//                }
+//            });
+//            return true;
+//        } catch (org.openqa.selenium.NoSuchElementException ex) {
+//            return false;
+//        }
+//    }
+
 
     public static boolean isElementExist(By Locator) {
         try {
@@ -369,19 +413,20 @@ public class OperateBase{
      * @param by
      * @param time
      */
-//    public AndroidElement waitAuto(final By by,int time){
-//        try {
-//            element = new WebDriverWait(driver,time).until(new ExpectedCondition<AndroidElement>() {
-//                @Override
-//                public AndroidElement apply(WebDriver webDriver) {
-//                    return (AndroidElement) driver.findElement(by);
-//                }
-//            });
-//        } catch (TimeoutException e) {
-//            e.printStackTrace();
-//        }
-//        return element;
-//    }
+    public AndroidElement autoWait(final By by,int time){
+        AndroidElement element = null;
+        try {
+            element = new WebDriverWait(driver,time).until(new ExpectedCondition<AndroidElement>() {
+                @Override
+                public AndroidElement apply(WebDriver webDriver) {
+                    return (AndroidElement) driver.findElement(by);
+                }
+            });
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        return element;
+    }
 
     /**
      * 长按控件并移动到目标地
