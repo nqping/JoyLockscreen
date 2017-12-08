@@ -27,4 +27,16 @@ public class FeedbackPage extends BasePage {
     @AndroidFindBy(id="com.tcl.joylockscreen:id/contact_information")
     public AndroidElement email;
 
+    @AndroidFindBy(uiAutomator = "text(\"About\")")
+    public AndroidElement about;
+
+    @AndroidFindBy(uiAutomator = "text(\"Terms of Service\")")
+    public AndroidElement termsOfService;
+
+    @AndroidFindBy(uiAutomator = "text(\"Privacy Policy\")")
+    public AndroidElement privacyPolicy;
+
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/iv_back")
+    public AndroidElement backButton;
+
 }
