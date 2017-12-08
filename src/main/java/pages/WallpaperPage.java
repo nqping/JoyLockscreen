@@ -17,15 +17,15 @@ public class WallpaperPage extends BasePage{
     }
 
     @AndroidFindBy(uiAutomator = "text(\"Set wallpaper\")")
-    //@CacheLookup
+    @CacheLookup
     public AndroidElement wallpager;
 
     @AndroidFindBy(uiAutomator="text(\"Default wallpaper\")")
-    //@CacheLookup
+    @CacheLookup
     public AndroidElement defaultWallpaper;
 
     @AndroidFindBy(uiAutomator="text(\"Custom wallpaper\")")
-    //@CacheLookup
+    @CacheLookup
     public AndroidElement customWallpaper;
 
     @AndroidFindBy(id="com.tcl.joylockscreen:id/iv_back")
