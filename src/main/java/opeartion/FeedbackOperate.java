@@ -33,17 +33,29 @@ public class FeedbackOperate extends OperateBase {
      * 提交反馈
      */
     public AndroidElement feedbackInfo(){
-        try {
-            swipeToUp();
-            feedbackPage.feedback.click();
-            feedbackPage.content.sendKeys("test 123456 AAAD 测试使用!");
-            goSleep(1000);
-            feedbackPage.submit.click();
-           element = findElementToast(By.xpath(".//*[contains(@text,\"Thanks for your feedback\")]"),1000);
-            return element;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        swipeToUp();
+        feedbackPage.feedback.click();
+        feedbackPage.content.sendKeys("test 123456 AAAD 测试使用!");
+        goSleep(1000);
+        feedbackPage.submit.click();
+        element = findElementToast(By.xpath(".//*[contains(@text,\"Thanks for your feedback\")]"),1000);
         return element;
+
+    }
+
+    /**
+     * 查看关于我们
+     */
+    public boolean swipeAbout(){
+//        feedbackPage.about.click();
+//        feedbackPage.termsOfService.click();
+//        swipeToUp("4.5");
+//        swipeToDown("Joy Lockscreen Term of Service");
+//        feedbackPage.backButton.click();
+//        //浏览隐私政策
+//        feedbackPage.privacyPolicy.click();
+//        swipeToUp("PRIVACY QUESTIONS");
+//        flag = swipeToDown("Joy Lockscreen Privacy Policy");
+        return flag;
     }
 }
