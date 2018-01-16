@@ -89,31 +89,4 @@ public class CommonUtils {
 
     }
 
-//    public static void unLockScreen(AndroidDriver driver, AndroidElement element,int ...num) throws Exception {
-//        if(num.length < 4){
-//            throw new Exception("The length of the array must be greater than 4");
-//        }
-//
-//       // Point point = element.getLocation();
-//        Rectangle rect = element.getRect();
-//        int x0 = rect.x + (int)((double)138/816*rect.getWidth());
-//        int y0 = rect.y + (int)((double)138/816*rect.getHeight());
-//        int offset = (rect.getWidth()-2*(int)((double)138/816*rect.getWidth()))/2;//D 点与点之间距离
-//        Point[] p =new Point[9];
-//        for(int i=0; i<9; i++){
-//            p[i] = new Point();
-//            p[i].x = x0+(i+3)%3*offset;
-//            int dy = i-3>0 ? ((i-3)<3 ? 1:2):0;
-//            p[i].y = y0+dy*offset;
-//            // System.out.println("i="+i+" x="+p[i].x+" y="+p[i].y);
-//        }
-//
-//        Point[] segments = new Point[num.length];
-//        for(int i=0;i<num.length; i++){
-//            segments[i] = p[num[i]-1];
-//        }
-//        driver.swipe();
-//
-//
-//    }
 }
