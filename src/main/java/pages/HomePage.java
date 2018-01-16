@@ -53,6 +53,16 @@ public class HomePage extends BasePage{
     @CacheLookup
     public AndroidElement pin;
 
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/enable_phone_item_view")
+    public AndroidElement callWithoutLock;
+
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/enable_curtain_item_view")
+    public AndroidElement windmillRope;
+
+
+
+
+
 
 
 //    @FindBy(name="Select common apps")
