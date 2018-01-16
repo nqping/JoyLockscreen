@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidKeyCode;
 import io.appium.java_client.android.Connection;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.util.TextUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,8 +15,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.CommonUtils;
+import utils.Constant;
+import utils.ImageUtil;
 
-import javax.annotation.Nullable;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +41,43 @@ public class OperateBase{
     MultiTouchAction multiTouchAction;
 
     /**
+     * 获取触摸实例
+     *
+     * @return
+     */
+    public TouchAction getTouch() {
+        if (driver == null) {
+            print("单点触摸时候driver为空");
+            return null;
+        } else {
+            if (touchAction == null) {
+                return new TouchAction(driver);
+            } else {
+                return touchAction;
+            }
+        }
+    }
+
+    /**
+     * 获取多点触摸实例
+     *
+     * @return
+     */
+    public MultiTouchAction getMultiTouch() {
+        if (driver == null) {
+            print("多点触摸时候driver为空");
+            return null;
+        } else {
+            if (multiTouchAction == null) {
+                return new MultiTouchAction(driver);
+            } else {
+                return multiTouchAction;
+            }
+
+        }
+    }
+
+    /**
      * 构造函数
      * @param driver
      */
@@ -44,6 +86,20 @@ public class OperateBase{
         this.driver = driver;
     }
 
+
+    public boolean imgCompare(String define_name,String screen_shot_name){
+        File f1 = new File("img/"+define_name+".png");
+        BufferedImage img1 = ImageUtil.getImageFromFile(f1);
+        File f2 = driver.getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(f2, new File("target/reports/screenshots/"+screen_shot_name+".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedImage img2 = ImageUtil.getImageFromFile(f2);
+        Boolean same =ImageUtil.sameAs(img1, img2, 0.98);
+        return same ;
+    }
 
     /**
      * 图案解锁
@@ -104,6 +160,7 @@ public class OperateBase{
                 throw new Exception("The length of the array must be greater than 4");
             }
             List<AndroidElement> pin = driver.findElements(By.xpath("//android.view.ViewGroup/android.widget.ImageView"));
+            System.out.println(pin.size());
             HashMap<Integer,AndroidElement> pinMap = new HashMap<Integer,AndroidElement>();
             pinMap.put(1,pin.get(0));
             pinMap.put(2,pin.get(2));
@@ -256,9 +313,10 @@ public class OperateBase{
     /**
      * 从指定距离向上滑动
      */
-    public void swipeToUp(int startX,int startY,int endX,int endY,int duration) {
+    public void swipe(int startX,int startY,int endX,int endY,int duration) {
         doSwipe(startX, startY, endX, endY, duration);
     }
+
 
     /**
      * 从左向右滑动
@@ -284,19 +342,6 @@ public class OperateBase{
         touchAction.press(startx,starty).waitAction(Duration.ofMillis(duration)).moveTo(endx,endy).release();
         touchAction.perform();
     }
-
-//    public boolean swipeToUp(String str){
-//        boolean isSwipe = true;
-//        while (isSwipe){
-//            swipeToUp();
-//            goSleep(1000);
-//            String pageSource = driver.getPageSource();
-//            if(pageSource.contains(str)){
-//                isSwipe = false;
-//            }
-//        }
-//        return isSwipe;
-//    }
 
     public boolean swipeToDown(String str){
         boolean isSwipe = true;
@@ -437,5 +482,31 @@ public class OperateBase{
     {
         TouchAction touchAction = new TouchAction(driver);
         touchAction.longPress(origin_el).moveTo(destination_el).release().perform();
+    }
+
+    /**
+     * 熄屏亮屏中间休眠2000
+     */
+    public void powerEvent(){
+        driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
+        goSleep(2000);
+        driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
+        goSleep(2000);
+    }
+
+    public void unLock(int lockType){
+        int width = driver.manage().window().getSize().width;
+        int height = driver.manage().window().getSize().height;
+        swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+       switch (lockType){
+           case 2:
+               drawLockPin(Constant.PIN_NUMBER);
+               break;
+           case 3:
+               drawLockPattern(Constant.LOCK_PATTERN);
+               break;
+           default:
+               break;
+       }
     }
 }
