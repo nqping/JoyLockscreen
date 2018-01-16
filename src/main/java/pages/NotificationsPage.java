@@ -18,17 +18,29 @@ public class NotificationsPage extends BasePage{
     public AndroidElement appNotifications;
 //OFF ON
     @AndroidFindBy(id="com.tcl.joylockscreen:id/switch_open_notification")
-    public AndroidElement notificationSwitch;
+    public AndroidElement notificationSwitch; //应用通知开关
 
     @AndroidFindBy(id="com.tcl.joylockscreen:id/btn_app_select")
-    public AndroidElement appAllSelect;
+    public AndroidElement appAllSelect;  //应用通知页面的 全选框
 
     @AndroidFindBy(id="com.tcl.joylockscreen:id/fl_apppick_container")
-    public AndroidElement appContainer;
+    public AndroidElement appContainer; //应用通知页面的应用列表
 
     @AndroidFindBy(id="com.tcl.joylockscreen:id/iv_back")
-    public AndroidElement backButton;
+    public AndroidElement backButton; //应用通知页面返回按钮
 
-    @AndroidFindBy(id="com.tcl.joylockscreen:id/img_selected")
-    public AndroidElement imgSelected;
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/lock_notification_clean_button")
+    public AndroidElement cleanButton; //锁屏页一键清除通知按钮
+
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/lock_notification_shield")
+    public AndroidElement hideButton; //长按通知出现的 隐藏通知按钮
+
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/lock_notification_cancel")
+    public AndroidElement cancelButton; //长按通知出现的 取消按钮
+
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/views_shared_infocardbaseview_detail_text")
+    public AndroidElement hideDetailButton; //左边 隐藏按钮
+
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/views_shared_infocardbaseview_dismiss_text")
+    public AndroidElement hideDismissButton; //右边隐藏按钮
 }
