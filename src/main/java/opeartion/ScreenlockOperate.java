@@ -18,8 +18,6 @@ public class ScreenlockOperate extends OperateBase {
     public boolean flag = false;
     Logger logger = LoggerFactory.getLogger(ScreenlockOperate.class);
 
-
-
     /**
      * 构造方法
      * @param driver
@@ -40,7 +38,7 @@ public class ScreenlockOperate extends OperateBase {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
 
-        swipeToUp(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+        swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
 
     }
 
@@ -48,14 +46,14 @@ public class ScreenlockOperate extends OperateBase {
      * 从swipe设置Pattern 锁
      * @return
      */
-    public boolean setPattern(){
+    public boolean setPattern(int ...number){
         try {
             homePage.screenLock.click();//进入锁设置页面
             homePage.pattern.click();//进入Pattern绘制图案页
-            drawLockPattern(0,1,2,5,8);//绘制图案
-            drawLockPattern(0,1,2,5,8);//确认图案
+            drawLockPattern(number);//绘制图案
+            drawLockPattern(number);//确认图案 0,1,2,5,8
             goSleep(1000);
-            flag = validationLock(Constant.LOCK_PATTERN,0,1,2,5,8);
+            flag = validationLock(Constant.LOCK_PATTERN,number);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,27 +63,16 @@ public class ScreenlockOperate extends OperateBase {
     /**
      *从Pattern切换到Pin
      */
-    public boolean setPin(){
+    public boolean setPin(int [] patternNumber,int [] pinNumber){
 
         homePage.screenLock.click();
-        drawLockPattern(0,1,2,5,8);//绘制确认图案
+        drawLockPattern(patternNumber);//绘制确认图案
         homePage.pin.click(); //进入Pin码设置
-        drawLockPin(1,2,3,6,9); //输入Pin码
-        drawLockPin(1,2,3,6,9);//确认Pin码
+        drawLockPin(pinNumber); //输入Pin码
+        drawLockPin(pinNumber);//确认Pin码
         goSleep(1000);
-        flag = validationLock(Constant.LOCK_PIN,1,2,3,6,9); //验证密码使用效果
+        flag = validationLock(Constant.LOCK_PIN,pinNumber); //验证密码使用效果
         return flag;
-    }
-
-    public boolean setSwipe(){
-        homePage.screenLock.click();
-        drawLockPin(1,2,3,6,9); //输入Pin码
-        homePage.swipe.click();
-        flag = validationLock(Constant.LOCK_SWIPE,null); //验证密码使用效果
-
-
-
-        return false;
     }
 
     /**
@@ -94,23 +81,22 @@ public class ScreenlockOperate extends OperateBase {
      * @param number
      */
     public boolean validationLock(int lockType,int...number){
-
-        driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-        goSleep(1000);
-        driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER);//电源事件,亮屏
-        goSleep(1000);
+        powerEvent();
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        swipeToUp(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+        //上滑
+        swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
         if(lockType == Constant.LOCK_PATTERN){
             drawLockPattern(number);//绘制图案
         }else if(lockType == Constant.LOCK_PIN){
             drawLockPin(number);//确认密码
         }
         goSleep(1000);
-        if(driver.getPageSource().contains("com.tcl.joylockscreen:id/unlockview")){//是否包含该id
+        if(driver.getPageSource().contains("com.tcl.joylockscreen:id/lockview_content")){//是否包含该id
             return false; //表示解锁失败
         }
         return true;
     }
+
+
 }
