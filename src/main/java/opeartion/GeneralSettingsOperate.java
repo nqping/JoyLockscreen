@@ -34,7 +34,7 @@ public class GeneralSettingsOperate extends OperateBase {
      * 步骤二:在锁屏页滑动电话图标,出现解锁页用例失败,反之失败
      * 步骤三:正常解锁后,是否显示拨号页面,反之失败
      * 步骤四:点击系统返回键退出页面,回到Joy首页
-     * @return
+     * @return boolean
      */
     public boolean defaultCallWidthLockStatus(){
         WebElement callSwitch = homePage.callWithoutLock.findElementById("com.tcl.joylockscreen:id/rl_root").
