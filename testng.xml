@@ -16,26 +16,6 @@
             </class>
         </classes>
     </test>
-    <test name="notification" preserve-order="true">
-        <parameter name="endstr" value="${endstr}"/>
-        <classes>
-            <class name="testcases.NotificationCase">
-                <methods>
-                    <include name="testCleanAllNotifications"/>
-                    <include name="testLeftSlideDelete"/>
-                    <include name="testRigthSlideDelete"/>
-                    <include name="testLeftSildeHide"/>
-                    <include name="testRightSildeHide"/>
-                    <include name="testLongPressHide"/>
-                    <include name="testAppNotifiactions"/>
-                    <include name="testCheckDefaultStatus"/>
-                    <include name="testCancelSelectApp"/>
-                    <include name="testSelectAll"/>
-                    <include name="testReverseSelectApp"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
     <test name="callwidthout" preserve-order="true">
         <classes>
             <class name="testcases.CallwithoutCase">
@@ -54,6 +34,26 @@
                     <include name="testDefaultWindmillRopeStauts"/>
                     <include name="testOpenWindmillRope"/>
                     <include name="testCloseWindmillRope"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="notification" preserve-order="true">
+        <parameter name="endstr" value="${endstr}"/>
+        <classes>
+            <class name="testcases.NotificationCase">
+                <methods>
+                    <include name="testCleanAllNotifications"/>
+                    <include name="testLeftSlideDelete"/>
+                    <include name="testRigthSlideDelete"/>
+                    <include name="testLeftSildeHide"/>
+                    <include name="testRightSildeHide"/>
+                    <include name="testLongPressHide"/>
+                    <include name="testAppNotifiactions"/>
+                    <include name="testCheckDefaultStatus"/>
+                    <include name="testCancelSelectApp"/>
+                    <include name="testSelectAll"/>
+                    <include name="testReverseSelectApp"/>
                 </methods>
             </class>
         </classes>
