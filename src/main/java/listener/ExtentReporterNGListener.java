@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.*;
 import org.testng.IReporter;
 import org.testng.xml.XmlSuite;
+import utils.Constant;
 import utils.ReportUtil;
 
 import java.io.File;
@@ -189,7 +190,7 @@ public class ExtentReporterNGListener implements IReporter {
                     test.debug(output.replaceAll("<","&lt;").replaceAll(">","&gt;"));
                 }
                 if (result.getThrowable() != null) {
-                    //test.fail("detail",MediaEntityBuilder.createScreenCaptureFromPath("../"+Constant.IMG_PATH+result.getName()+".png").build());
+                    test.fail("detail",MediaEntityBuilder.createScreenCaptureFromPath("../"+ Constant.IMG_PATH+result.getName()+".png").build());
                     test.log(status, result.getThrowable());
                 }
                 else {
