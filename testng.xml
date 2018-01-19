@@ -17,7 +17,7 @@
         </classes>
     </test>
     <test name="notification" preserve-order="true">
-        <parameter name="endstr" value="YouTube"/>
+        <parameter name="endstr" value="${endstr}"/>
         <classes>
             <class name="testcases.NotificationCase">
                 <methods>
