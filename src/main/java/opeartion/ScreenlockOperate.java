@@ -28,19 +28,7 @@ public class ScreenlockOperate extends OperateBase {
         homePage = new HomePage(driver);
     }
 
-    public void testSwipe() throws InterruptedException {
-       // homePage.screenLock.click();
 
-        driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-        goSleep(2000);
-        driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER);//电源事件,亮屏
-        goSleep(2000);
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-
-        swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
-
-    }
 
     /**
      * 从swipe设置Pattern 锁
@@ -72,6 +60,19 @@ public class ScreenlockOperate extends OperateBase {
         drawLockPin(pinNumber);//确认Pin码
         goSleep(1000);
         flag = validationLock(Constant.LOCK_PIN,pinNumber); //验证密码使用效果
+        return flag;
+    }
+
+    /**
+     * 从PIN锁切换到 swipe锁
+     * @return
+     */
+    public boolean testChangeSwipe(){
+        homePage.screenLock.click();
+        drawLockPin(Constant.PIN_NUMBER);
+        homePage.swipe.click();
+        homePage.backButton.click();
+        flag = validationLock(Constant.LOCK_SWIPE,null);
         return flag;
     }
 

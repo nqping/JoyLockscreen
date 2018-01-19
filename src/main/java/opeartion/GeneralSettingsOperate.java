@@ -3,6 +3,7 @@ package opeartion;
 import bases.OperateBase;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidKeyCode;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,17 +40,15 @@ public class GeneralSettingsOperate extends OperateBase {
     public boolean defaultCallWidthLockStatus(){
         WebElement callSwitch = homePage.callWithoutLock.findElementById("com.tcl.joylockscreen:id/rl_root").
                 findElementByClassName("android.widget.Switch");
-        String checked = callSwitch.getAttribute("checked");
+        String checked = callSwitch.getAttribute("checked"); //检查开关状态
         if("false".equals(checked)){
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-            goSleep(1000);
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
-            goSleep(2000);
-            swipe(20, 1164, 20, 600, 1000); //滑动电话图标
-            if(driver.getPageSource().contains("com.tcl.joylockscreen:id/lockview_content")){
+           powerEvent();
+           swipe(20, 1164, 20, 600, 1000); //滑动电话图标
+            if(driver.getPageSource().contains("com.tcl.joylockscreen:id/lockview_content")){ //检查是否出现解锁页
                 logger.info("Call Withou Lock 功能默认状态是关闭状态(正确)");
+                goSleep(2000);
                 drawLockPin(Constant.PIN_NUMBER);
-                if(driver.findElementById("com.android.dialer:id/floating_action_button").isDisplayed()){
+                if(driver.getPageSource().contains("com.android.dialer:id/floating_action_button")){
                     driver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
                     return true;
                 }
@@ -74,19 +73,17 @@ public class GeneralSettingsOperate extends OperateBase {
         callSwitch.click();
         String checked = callSwitch.getAttribute("checked");
         if("true".equals(checked)) {//true表示打开
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-            goSleep(1000);
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
-            goSleep(2000);
+            powerEvent(); //熄屏亮屏
             swipe(20, 1164, 20, 600, 1000); //滑动锁屏页电话图标
-            if(driver.getPageSource().contains("com.android.dialer:id/floating_action_button")){
+            goSleep(2000);
+            if(isElementExist(By.id("com.android.dialer:id/floating_action_button"))){ //判断播号图标是否存在
                 logger.info("Call Without Lock功能打开成功");
                 driver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
-                goSleep(2000);
                 //以下操作是还原环境
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
                 swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+                goSleep(2000);
                 drawLockPin(Constant.PIN_NUMBER);
                 return true;
             }
@@ -109,16 +106,13 @@ public class GeneralSettingsOperate extends OperateBase {
         callSwitch.click();
         String checked = callSwitch.getAttribute("checked");
         if("false".equals(checked)){ //关闭状态
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-            goSleep(1000);
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
-            goSleep(2000);
+            powerEvent(); //熄屏亮屏
             int width = driver.manage().window().getSize().width;
             int height = driver.manage().window().getSize().height;
             swipe(20, height-20, 20, width * 3/4, 1000); //滑动电话图标
-            //swipe(20, 1164, 20, 600, 1000); //滑动电话图标
             if(driver.getPageSource().contains("com.tcl.joylockscreen:id/lockview_content")){ //出现解锁页表示正确
                 logger.info("Call Without Lock 功能关闭成功");
+                goSleep(2000);
                 drawLockPin(Constant.PIN_NUMBER); //解锁
                 if(driver.findElementById("com.android.dialer:id/floating_action_button").isDisplayed()){ //检查拨号图标是否存在
                     driver.pressKeyCode(AndroidKeyCode.KEYCODE_BACK);
@@ -141,16 +135,14 @@ public class GeneralSettingsOperate extends OperateBase {
                 findElementByClassName("android.widget.Switch");
         String checked = windmillRepoEl.getAttribute("checked");
         if("false".equals(checked)){
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-            goSleep(2000);
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
-            goSleep(2000);
+            powerEvent(); //熄屏亮屏
             if(!driver.getPageSource().contains("com.tcl.joylockscreen:id/ropeview")){
                 logger.debug("挂件初始状态正确");
                 //以下操作是还原环境
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
                 swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+                goSleep(2000);
                 drawLockPin(Constant.PIN_NUMBER);
                 return true;
             }
@@ -172,15 +164,13 @@ public class GeneralSettingsOperate extends OperateBase {
         windmillRepoEl.click(); //打开挂件
         String checked = windmillRepoEl.getAttribute("checked"); //获取挂件当前状态
         if("true".equals(checked)){
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-            goSleep(2000);
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
-            goSleep(30000);
+            powerEvent(); //熄屏亮屏
             if(driver.getPageSource().contains("com.tcl.joylockscreen:id/ropeview")){
                 logger.info("挂件打开成功!");
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
                 swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+                goSleep(2000);
                 drawLockPin(Constant.PIN_NUMBER);
                return true;
             }
@@ -202,20 +192,19 @@ public class GeneralSettingsOperate extends OperateBase {
         windmillRepoEl.click(); //打开挂件
         String checked = windmillRepoEl.getAttribute("checked"); //获取挂件状态
         if("false".equals(checked)){
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,熄屏
-            goSleep(2000);
-            driver.pressKeyCode(AndroidKeyCode.KEYCODE_POWER); //电源事件,亮屏
-            goSleep(2000);
+            powerEvent(); //熄屏亮屏
             if(!driver.getPageSource().contains("com.tcl.joylockscreen:id/ropeview")){
                 logger.info("挂件关闭成功");
                 //以下操作是还原环境
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
                 swipe(width / 2, height * 7 / 8, width / 2, height / 8, 500);
+                goSleep(2000);
                 drawLockPin(Constant.PIN_NUMBER);
                 return true;
             }
         }
         return false;
     }
+
 }

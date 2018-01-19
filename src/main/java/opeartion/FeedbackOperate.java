@@ -4,6 +4,7 @@ import bases.OperateBase;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.FeedbackPage;
@@ -13,9 +14,9 @@ import pages.FeedbackPage;
  */
 public class FeedbackOperate extends OperateBase {
     public Logger logger = LoggerFactory.getLogger(WallpaperOperate.class);
-    AndroidDriver driver;
-    AndroidElement element = null;
-    FeedbackPage feedbackPage;
+    public AndroidDriver driver;
+    public AndroidElement element = null;
+    public FeedbackPage feedbackPage;
 
     public boolean flag = false;
     /**

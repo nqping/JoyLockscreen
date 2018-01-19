@@ -23,7 +23,7 @@ public class NotificationsOperate extends OperateBase {
     Logger logger = LoggerFactory.getLogger(NotificationsOperate.class);
 
     AndroidDriver driver;
-    NotificationsPage notificationsPage;
+    public NotificationsPage notificationsPage;
     WebElement notificationView;
     List<WebElement> notificationList;
     int count = 0;
@@ -35,8 +35,10 @@ public class NotificationsOperate extends OperateBase {
      * @param driver
      */
     public NotificationsOperate(AndroidDriver driver) {
+
         super(driver);
         this.driver = driver;
+
         notificationsPage = new NotificationsPage(driver);
 
     }
@@ -154,6 +156,7 @@ public class NotificationsOperate extends OperateBase {
         Map<String,Boolean> rsMap = getAppSelectStatus(endstr);
         for (String key : rsMap.keySet()) {
             if(rsMap.get(key) == false){ //map值有 false 时,表示 非全选
+                notificationsPage.backButton.click(); //失败则退出当前页面
                 return false;
             }
         }
@@ -392,6 +395,7 @@ public class NotificationsOperate extends OperateBase {
             getTouch().press(notificationView,startX,endY).moveTo(notificationView,startX-100,endY).release().perform();
             notificationsPage.hideDismissButton.click(); //右边按钮
             if(isElementExist(By.id("com.tcl.joylockscreen:id/lock_notification_shield"))){
+                notificationsPage.cancelButton.click();
                 return true;
             }
         }
@@ -420,6 +424,7 @@ public class NotificationsOperate extends OperateBase {
             getTouch().press(notificationView,startX,endY).moveTo(notificationView,startX+100,endY).release().perform();
             notificationsPage.hideDetailButton.click(); //左边按钮
             if(isElementExist(By.id("com.tcl.joylockscreen:id/lock_notification_shield"))){
+                notificationsPage.cancelButton.click();
                 return true;
             }
         }
