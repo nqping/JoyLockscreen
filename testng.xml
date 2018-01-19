@@ -6,13 +6,28 @@
         <listener class-name="listener.ExtentReporterNGListener"></listener>
     </listeners>
     <test verbose="1" preserve-order="true" name="changeLock" thread-count="1">
-        <parameter name="endstr" value="YouTube"/>
         <classes>
             <class name="testcases.ScreenlockTest">
                 <methods>
-                    <!--<include name="testChangePattern"/>-->
-                    <!--<include name="testChangePin"/>-->
-                    <!-- <include name="testDefaultWallpaper"/> -->
+                    <include name="testChangePattern"/>
+                    <include name="testChangePin"/>
+                    <!--<include name="testChangeSwipe"/>-->
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="notification" preserve-order="true">
+        <parameter name="endstr" value="YouTube"/>
+        <classes>
+            <class name="testcases.NotificationCase">
+                <methods>
+                    <include name="testCleanAllNotifications"/>
+                    <include name="testLeftSlideDelete"/>
+                    <include name="testRigthSlideDelete"/>
+                    <include name="testLeftSildeHide"/>
+                    <include name="testRightSildeHide"/>
+                    <include name="testLongPressHide"/>
+                    <include name="testAppNotifiactions"/>
                     <include name="testCheckDefaultStatus"/>
                     <include name="testCancelSelectApp"/>
                     <include name="testSelectAll"/>
@@ -21,4 +36,37 @@
             </class>
         </classes>
     </test>
+    <test name="callwidthout" preserve-order="true">
+        <classes>
+            <class name="testcases.CallwithoutCase">
+                <methods>
+                    <include name="testDefaultCallWidthLockStatus"/>
+                    <include name="testOpenCallWithoutLock"/>
+                    <include name="testCloseCallWithouLock"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="windmillRope" preserve-order="true">
+        <classes>
+            <class name="testcases.WindmillRopeCase">
+                <methods>
+                    <include name="testDefaultWindmillRopeStauts"/>
+                    <include name="testOpenWindmillRope"/>
+                    <include name="testCloseWindmillRope"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <!--<test name="feedback" preserve-order="true">-->
+        <!--<classes>-->
+            <!--<class name="testcases.FeedbackCase">-->
+                <!--<methods>-->
+                    <!--<include name="testFeedback"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+        <!--</classes>-->
+    <!--</test>-->
+
+
 </suite>
