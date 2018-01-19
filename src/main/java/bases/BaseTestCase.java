@@ -6,10 +6,7 @@ import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.MobileCapabilityType;
 import listener.AppiumEventListener;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,7 +15,7 @@ import java.net.URL;
  * Created by qingping.niu on 2017/11/17.
  */
 public class BaseTestCase {
-    public AndroidDriver driver;
+    public static AndroidDriver driver;
     //public Logger logger = LoggerFactory.getLogger(BaseTestCase.class);
 
     @BeforeSuite

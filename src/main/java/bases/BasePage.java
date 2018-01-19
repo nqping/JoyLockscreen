@@ -14,12 +14,9 @@ public class BasePage {
     public AndroidDriver driver;
     private final  int TIMEOUT = 10;
 
-//    public BasePage(){
-//
-//    }
-
     public BasePage(AndroidDriver driver){
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver,5,TimeUnit.SECONDS),this);
+        //PageFactory.initElements(driver,this);
     }
 }
