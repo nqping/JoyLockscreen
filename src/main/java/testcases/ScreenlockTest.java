@@ -23,6 +23,7 @@ public class ScreenlockTest extends BaseTestCase{
    @BeforeClass
     public void setUp() throws MalformedURLException {
         //实例化操作类
+       System.out.println("---ScreenlockTest:BeforeClass---");
        screenlockOperate = new ScreenlockOperate(driver);
    }
 
@@ -44,6 +45,12 @@ public class ScreenlockTest extends BaseTestCase{
        boolean flag = screenlockOperate.setPin(Constant.PATTERN_NUMBER,Constant.PIN_NUMBER);
        assertTrue(flag,"PIN setting fail");
    }
+
+//   @Test
+//   public void testChangeSwipe(){
+//       boolean flag = screenlockOperate.testChangeSwipe();
+//       assertTrue(flag,"");
+//   }
 
 
 

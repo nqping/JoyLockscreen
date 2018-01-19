@@ -10,21 +10,21 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by qingping.niu on 2018/1/16.
  */
-public class WindmillRopeCase extends BaseTestCase {
+public class WindmillRopeCase {
     GeneralSettingsOperate generalSettingsOperate = null;
 
     @BeforeClass
     public void setUp(){
-        generalSettingsOperate = new GeneralSettingsOperate(driver);
+        generalSettingsOperate = new GeneralSettingsOperate(BaseTestCase.driver);
     }
 
     @Test
-    public void testDefaultWindmillRope(){
+    public void testDefaultWindmillRopeStauts(){ //挂件默认状态
         boolean flag = generalSettingsOperate.defaultWindmillRopeStauts();
         assertTrue(flag,"挂件初始状态不正确");
     }
 
-    @Test(dependsOnMethods = {"testDefaultWindmillRope"},alwaysRun=true)
+    @Test(dependsOnMethods = {"testDefaultWindmillRopeStauts"},alwaysRun=true)
     public void testOpenWindmillRope(){
         boolean flag = generalSettingsOperate.openWindmillRope();
         assertTrue(flag,"挂件打开失败");

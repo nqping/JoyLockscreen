@@ -2,6 +2,7 @@ package testcases;
 
 import bases.BaseTestCase;
 import opeartion.GeneralSettingsOperate;
+import org.jsoup.Connection;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -12,12 +13,12 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by qingping.niu on 2018/1/16.
  */
-public class CallwithoutCase extends BaseTestCase {
+public class CallwithoutCase{
     GeneralSettingsOperate generalSettingsOperate = null;
 
     @BeforeClass
     public void setUp(){
-        generalSettingsOperate = new GeneralSettingsOperate(driver);
+        generalSettingsOperate = new GeneralSettingsOperate(BaseTestCase.driver);
     }
 
     @Test
@@ -32,12 +33,9 @@ public class CallwithoutCase extends BaseTestCase {
         assertTrue(flag,"Open telephone page fail ");
     }
 
-    //@Test(dependsOnMethods = {"testOpenCallWithoutLock"},alwaysRun=true)
-    @Test
+    @Test(dependsOnMethods = {"testOpenCallWithoutLock"},alwaysRun = true)
     public void testCloseCallWithouLock(){
         boolean flag = generalSettingsOperate.closeCallWithouLock();
         assertTrue(flag,"Close telephone page fail ");
     }
-
-
 }

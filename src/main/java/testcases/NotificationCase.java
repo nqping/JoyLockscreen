@@ -4,6 +4,7 @@ import bases.BaseTestCase;
 import opeartion.NotificationsOperate;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import utils.Constant;
 
@@ -14,18 +15,20 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by qingping.niu on 2018/1/11.
  */
-public class NotificationCase extends BaseTestCase{
+public class NotificationCase {
     public NotificationsOperate notificationsOperate = null;
 
     @BeforeClass
     public void setUp() throws MalformedURLException {
-        notificationsOperate = new NotificationsOperate(driver);
+        System.out.println("---NotificationCase:BeforeClass---");
+        notificationsOperate = new NotificationsOperate(BaseTestCase.driver);
     }
 
     //***************锁屏页 删除操作**************************************************//
 
     @Test
     public void testCleanAllNotifications(){
+
         boolean flag = notificationsOperate.cleanAllNotifications();
         notificationsOperate.unLock(Constant.LOCK_PIN);
         notificationsOperate.addNotification();

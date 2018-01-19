@@ -16,9 +16,10 @@ import static org.testng.Assert.assertTrue;
  * Created by qingping.niu on 2018/1/16.
  */
 public class FeedbackCase extends BaseTestCase {
-    FeedbackOperate feedbackOperate = null;
+    public FeedbackOperate feedbackOperate = null;
     @BeforeClass
-    public void setUp() throws MalformedURLException {
+    public void setUp(){
+        System.out.println("---FeedbackCase:BeforeClass---");
         feedbackOperate = new FeedbackOperate(driver);
     }
 
