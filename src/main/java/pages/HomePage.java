@@ -59,6 +59,9 @@ public class HomePage extends BasePage{
     @AndroidFindBy(id="com.tcl.joylockscreen:id/enable_curtain_item_view")
     public AndroidElement windmillRope;
 
+    @AndroidFindBy(id="com.tcl.joylockscreen:id/iv_back")
+    public AndroidElement backButton; //应用通知页面返回按钮
+
 
 
 
